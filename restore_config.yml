@@ -1,13 +1,18 @@
 ---
 - name: RESTORE CONFIGURATION
   hosts: cisco
-  connection: network_cli
   gather_facts: no
 
   tasks:
     - name: COPY RUNNING CONFIG TO ROUTER
-      command: scp -o "StrictHostKeyChecking=no" /tmp/backup/{{inventory_hostname}}.config  {{inventory_hostname}}:/{{inventory_hostname}}.config
+      command: scp ./backup/{{inventory_hostname}}.config  {{inventory_hostname}}:/{{inventory_hostname}}.config
       delegate_to: localhost
+
+- name: RESTORE CONFIGURATION
+  hosts: cisco
+  connection: network_cli
+  gather_facts: no
+  tasks:
 
     - name: CONFIG REPLACE
       ios_command:
