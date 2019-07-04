@@ -66,17 +66,17 @@
     # e.g. we want the configs backed up to one spot
     # versus scattered indidivual nodes
     # the conditional when doesn't push it, if that router failed earlier
-    - name: TRANSFER FILE FROM THIS ANSIBLE HOST TO {{store_configs}}
-      vars:
-        backup_filename: "{{inventory_hostname}}"
-        ansible_connection: ssh
-        backup_folder: "{{hostvars.rtr1.config_output.backup_path.split('.')[-1]}}"
-      copy:
-        src: "{{config_output.backup_path}}"
-        dest: "/tmp/backup/{{backup_folder}}/{{backup_filename}}"
-      delegate_to: "{{store_configs}}"
-      when: config_output is defined
-      become: yes
+    #    - name: TRANSFER FILE FROM THIS ANSIBLE HOST TO {{store_configs}}
+    #  vars:
+    #    backup_filename: "{{inventory_hostname}}"
+    #    ansible_connection: ssh
+    #    backup_folder: "{{hostvars.rtr1.config_output.backup_path.split('.')[-1]}}"
+    #  copy:
+    #    src: "{{config_output.backup_path}}"
+    #    dest: "/tmp/backup/{{backup_folder}}/{{backup_filename}}"
+    #  delegate_to: "{{store_configs}}"
+    #  when: config_output is defined
+    #  become: yes
 
 - name: BACKUP ROUTER CONFIGURATIONS
   hosts: localhost
@@ -85,7 +85,6 @@
     - name: FIND BACKUPS
       find:
         paths: /tmp/backup
-        file_type: directory
       register: backups
       run_once: true
       delegate_to: "{{store_configs}}"
