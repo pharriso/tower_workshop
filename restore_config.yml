@@ -5,7 +5,7 @@
 
   tasks:
     - name: COPY RUNNING CONFIG TO ROUTER
-      command: scp ./backup/{{inventory_hostname}}.config  {{inventory_hostname}}:/{{inventory_hostname}}.config
+      command: scp /tmp/{{inventory_hostname}}.config  ec2-user@{{inventory_hostname}}:/{{inventory_hostname}}.config
       delegate_to: localhost
 
 - name: RESTORE CONFIGURATION
