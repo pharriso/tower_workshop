@@ -5,6 +5,6 @@
   tasks:
 
   - name: ADD THE IOS BANNER
-    net_banner:
+    ios_banner:
       text: "{{ network_banner }}"
       banner: login
