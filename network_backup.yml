@@ -51,6 +51,17 @@
       run_once: yes
       become: yes
 
+    - name: CREATE LINK TO LATEST BACKUP
+      vars:
+        ansible_connection: ssh
+      file:
+        src: "/tmp/backup/{{hostvars.rtr1.config_output.backup_path.split('.')[-1]}}"
+        dest: /tmp/backup/latest
+        state: link
+      delegate_to: "{{store_configs}}"
+      run_once: yes
+      become: yes
+
     # This might be required because you might be running a Tower cluster
     # e.g. we want the configs backed up to one spot
     # versus scattered indidivual nodes
