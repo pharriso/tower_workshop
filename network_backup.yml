@@ -85,6 +85,7 @@
     - name: FIND BACKUPS
       find:
         paths: /tmp/backup
+        file_type: any
       register: backups
       run_once: true
       delegate_to: "{{store_configs}}"
