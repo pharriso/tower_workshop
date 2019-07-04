@@ -1,0 +1,13 @@
+---
+- name: CHECK FOR DODGY USER
+  hosts: cisco
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+    - name: CHECK FOR DODGY USER
+      ios_command:
+        commands:
+          - show user | i username dodgy
+      register: show_output
+      failed_when: "'dodgy' in show_output.stdout[0]"
