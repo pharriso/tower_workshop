@@ -8,6 +8,6 @@
     - name: CHECK FOR DODGY USER
       ios_command:
         commands:
-          - show user | i username dodgy
+          - show running-config | i username dodgy
       register: show_output
       failed_when: "'dodgy' in show_output.stdout[0]"
