@@ -10,4 +10,4 @@
         commands:
           - show banner login
       register: show_output
-      failed_when: "'ansible' not in show_output.stdout[0]"
+      failed_when: "'this will cause a failure' in show_output.stdout[0]"
