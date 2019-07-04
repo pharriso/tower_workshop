@@ -1,5 +1,10 @@
 ---
-- name: ADD THE IOS BANNER
-  ios_banner:
-    text: "{{ network_banner }}"
-    banner: login
+- name: SET ROUTER BANNERS
+  hosts: cisco
+  gather_facts: no
+  tasks:
+
+  - name: ADD THE IOS BANNER
+    ios_banner:
+      text: "{{ network_banner }}"
+      banner: login
