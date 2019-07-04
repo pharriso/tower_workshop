@@ -1,0 +1,13 @@
+---
+- name: CHECK LOGIN BANNER
+  hosts: cisco
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+    - name: CHECK LOGIN BANNER
+      ios_command:
+        commands:
+          - show banner login
+      register: show_output
+      failed_when: "'ansible' not in show_output.stdout[0]"
