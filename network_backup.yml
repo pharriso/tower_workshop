@@ -78,7 +78,6 @@
       register: backups
       run_once: true
       delegate_to: "{{store_configs}}"
-      become: yes
 
     - name: CREATE RESTORE JOB TEMPLATE
       tower_job_template:
