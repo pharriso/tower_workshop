@@ -9,6 +9,8 @@
       net_put: 
         src: /tmp/backup/latest/{{inventory_hostname}}
         dest: flash:/{{inventory_hostname}}.config
+      vars:
+        ansible_command_timeout: 120
 
     - name: CONFIG REPLACE
       ios_command:
