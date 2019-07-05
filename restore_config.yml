@@ -7,7 +7,7 @@
   tasks:
     - name: COPY RUNNING CONFIG TO ROUTER
       net_put: 
-        src: /tmp/backup/latest/{{inventory_hostname}}
+        src: ./backup/latest/{{inventory_hostname}}
         dest: flash:/{{inventory_hostname}}.config
 
     - name: CONFIG REPLACE

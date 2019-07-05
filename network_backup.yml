@@ -11,11 +11,11 @@
       when: ansible_network_os is defined
 
     # This verifies the backup directory exists on the host you want to store conifgs
-    - name: CREATE /tmp/BACKUP DIRECTORY ON {{store_configs}}
+    - name: CREATE BACKUP DIRECTORY ON {{store_configs}}
       vars:
         ansible_connection: ssh
       file:
-        path: /tmp/backup
+        path: "./backup"
         state: directory
       delegate_to: "{{store_configs}}"
       run_once: yes
@@ -45,7 +45,7 @@
       vars:
         ansible_connection: ssh
       file:
-        path: "/tmp/backup/{{hostvars.rtr1.config_output.backup_path.split('.')[-1]}}"
+        path: "./backup/{{hostvars.rtr1.config_output.backup_path.split('.')[-1]}}"
         state: directory
       delegate_to: "{{store_configs}}"
       run_once: yes
@@ -55,8 +55,8 @@
       vars:
         ansible_connection: ssh
       file:
-        src: "/tmp/backup/{{hostvars.rtr1.config_output.backup_path.split('.')[-1]}}"
-        dest: /tmp/backup/latest
+        src: "./backup/{{hostvars.rtr1.config_output.backup_path.split('.')[-1]}}"
+        dest: "./backup/latest"
         state: link
       delegate_to: "{{store_configs}}"
       run_once: yes
@@ -73,7 +73,7 @@
         backup_folder: "{{hostvars.rtr1.config_output.backup_path.split('.')[-1]}}"
       copy:
         src: "{{config_output.backup_path}}"
-        dest: "/tmp/backup/{{backup_folder}}/{{backup_filename}}"
+        dest: "./backup/{{backup_folder}}/{{backup_filename}}"
       delegate_to: "{{store_configs}}"
       when: config_output is defined
       become: yes
@@ -82,14 +82,6 @@
   hosts: localhost
   gather_facts: yes
   tasks:
-    - name: FIND BACKUPS
-      find:
-        paths: /tmp/backup
-        file_type: directory
-      register: backups
-      run_once: true
-      delegate_to: "{{store_configs}}"
-
     - name: CREATE RESTORE JOB TEMPLATE
       tower_job_template:
         name: "RESTORE NETWORK CONFIG"
