@@ -15,7 +15,7 @@
       vars:
         ansible_connection: ssh
       file:
-        path: "./backup"
+        path: /tmp/backup
         state: directory
       delegate_to: "{{store_configs}}"
       run_once: yes
@@ -45,7 +45,7 @@
       vars:
         ansible_connection: ssh
       file:
-        path: "./backup/{{hostvars.rtr1.config_output.backup_path.split('.')[-1]}}"
+        path: "/tmp/backup/{{hostvars.rtr1.config_output.backup_path.split('.')[-1]}}"
         state: directory
       delegate_to: "{{store_configs}}"
       run_once: yes
@@ -55,8 +55,8 @@
       vars:
         ansible_connection: ssh
       file:
-        src: "./backup/{{hostvars.rtr1.config_output.backup_path.split('.')[-1]}}"
-        dest: "./backup/latest"
+        src: "/tmp/backup/{{hostvars.rtr1.config_output.backup_path.split('.')[-1]}}"
+        dest: /tmp/backup/latest
         state: link
       delegate_to: "{{store_configs}}"
       run_once: yes
@@ -73,7 +73,7 @@
         backup_folder: "{{hostvars.rtr1.config_output.backup_path.split('.')[-1]}}"
       copy:
         src: "{{config_output.backup_path}}"
-        dest: "./backup/{{backup_folder}}/{{backup_filename}}"
+        dest: "/tmp/backup/{{backup_folder}}/{{backup_filename}}"
       delegate_to: "{{store_configs}}"
       when: config_output is defined
       become: yes
