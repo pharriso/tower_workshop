@@ -29,4 +29,4 @@
     - name: CREATE TOWER WORKFLOW
       tower_workflow_template:
         name: NETWORK INTERFACE WORKFLOW
-        schema: "{{ lookup('file', 'network_workflow.json') }}"
+        schema: "{{ lookup('file', 'workflow.json') }}"
