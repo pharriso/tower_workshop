@@ -1,0 +1,4 @@
+---
+interface_name: Tunnel0
+interface_ipv4: 10.101.101.4/24
+ping_test: 10.101.101.2

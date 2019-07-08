@@ -1,0 +1,11 @@
+---
+- name: SET ROUTER IP
+  hosts: cisco
+  gather_facts: no
+  tasks:
+
+  - name: Set IPv4 address
+    ios_l3_interface:
+      name: "{{ interface_name }}"
+      ipv4: "{{ interface_ipv4 }}"
+
