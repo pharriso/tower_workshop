@@ -28,5 +28,9 @@
 
     - name: CREATE TOWER WORKFLOW
       tower_workflow_template:
+        tower_username: admin
+        tower_password: ansible
+        tower_host: https://localhost
+        validate_certs: false
         name: NETWORK INTERFACE WORKFLOW
         schema: "{{ lookup('file', 'workflow.json') }}"
