@@ -1,0 +1,12 @@
+---
+- name: SET ROUTER IP
+  hosts: cisco
+  gather_facts: no
+  tasks:
+
+  - name: TEST REACHABILITY TO PEER
+    ios_ping:
+      dest: "{{ ping_test }}"
+      state: present
+
+
