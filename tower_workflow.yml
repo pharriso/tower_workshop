@@ -1,0 +1,32 @@
+---
+- name: SETUP TOWER WORKFLOW
+  hosts: ansible
+  connection: local
+  become: yes
+  gather_facts: no
+  vars:
+    tower_jobs:
+      - {"name": "ARCHIVE BACKUP", "playbook": "archive_backup.yml" }
+      - {"name": "ARCHIVE RESTORE", "playbook": "archive_restore.yml" }
+      - {"name": "PING TEST", "playbook": "network_ping.yml" }
+      - {"name": "CONFIGURE INTERFACE", "playbook": "network_interface.yml" }
+  tasks:
+
+    - name: CREATE TOWER JOB TEMPLATES
+      tower_job_template:
+        name: "{{ item.name }}"
+        job_type: "run"
+        inventory: "Workshop Inventory"
+        project: "Workshop Project"
+        playbook: "{{ item.playbook }}"
+        credential: "Workshop Credential"
+        tower_username: admin
+        tower_password: ansible
+        tower_host: https://localhost
+        validate_certs: false
+      loop: "{{ tower_jobs }}"
+
+    - name: CREATE TOWER WORKFLOW
+      tower_workflow_template:
+        name: NETWORK INTERFACE WORKFLOW
+        schema: "{{ lookup('file', 'network_workflow.json') }}"

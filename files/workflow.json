@@ -1,0 +1,14 @@
+- id: 11
+  job_template: ARCHIVE BACKUP
+  success_nodes:
+  - id: 13
+    job_template: CONFIGURE INTERFACE
+    success_nodes:
+    - failure_nodes:
+      - id: 12
+        job_template: ARCHIVE RESTORE
+        success_nodes:
+        - id: 15
+          job_template: PING TEST
+      id: 14
+      job_template: PING TEST
