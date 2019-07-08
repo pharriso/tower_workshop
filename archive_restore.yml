@@ -1,0 +1,18 @@
+---
+- name: ARCHIVE ROUTER CONFIGURATIONS
+  hosts: cisco
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+    - name: GET LATEST ARCHIVE
+      ios_command:
+        commands:
+          - show archive | i Most Recent
+      register: archive
+
+    - name: RESTORE ARCHIVE
+      ios_command:
+        commands:
+          - config replace {{ archive.stdout[0].split()[1] }} force
+

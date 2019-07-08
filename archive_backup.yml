@@ -1,0 +1,17 @@
+---
+- name: ARCHIVE ROUTER CONFIGURATIONS
+  hosts: cisco
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+    - name: ENABLE ARCHIVE CONFIG
+      ios_config:
+        lines:
+          - path bootflash:archive
+        parents: archive
+
+    - name: ARCHIVE CONFIG
+      ios_command:
+        commands:
+          - archive config
