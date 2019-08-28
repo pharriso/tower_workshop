@@ -1,0 +1,62 @@
+---
+
+- hosts: all
+  connection: local
+  gather_facts: false
+  vars:
+    tower_org: "REDHAT NETWORK ORGANIZATION"
+    tower_project: "Workshop Project"
+    tower_credential: "Workshop Credential"
+    tower_inventory: "Workshop Inventory"
+    tower_username: admin
+    tower_password: ansible
+    job_template:
+    - { "name": "Network-Commands", "playbook": "network_commands.yml" }
+    - { "name": "Network-System", "playbook": "network_system.yml" }
+    - { "name": "Network-Time", "playbook": "network_time.yml" }
+    - { "name": "Network-User", "playbook": "network_user.yml" }
+  tasks:
+  - name: remove credential
+    tower_credential:
+      tower_host: "{{ inventory_hostname }}"
+      tower_username: "{{ tower_username }}"
+      tower_password: "{{ tower_password }}"
+      validate_certs: false
+      name: "{{ tower_credential }}"
+      organization: "{{ tower_org }}"
+      state: absent
+      kind: ssh
+
+  - name: remove job templates
+    tower_job_template:
+      tower_host: "{{ inventory_hostname }}"
+      tower_username: "{{ tower_username }}"
+      tower_password: "{{ tower_password }}"
+      validate_certs: false
+      name: "{{ item.name }}"
+      state: absent
+      job_type: run
+      project: "{{ tower_project }}"
+      playbook: "{{ item.playbook }}"
+    loop: "{{ job_template }}"
+    ignore_errors: true
+
+  - name: remove project
+    tower_project:
+      tower_host: "{{ inventory_hostname }}"
+      tower_username: "{{ tower_username }}"
+      tower_password: "{{ tower_password }}"
+      validate_certs: false
+      name: "{{ tower_project }}"
+      organization: "{{ tower_org }}"
+      state: absent
+
+  - name: remove inventory
+    tower_inventory:
+      tower_host: "{{ inventory_hostname }}"
+      tower_username: "{{ tower_username }}"
+      tower_password: "{{ tower_password }}"
+      validate_certs: false
+      name: "{{ tower_inventory }}"
+      state: absent
+      organization: "{{ tower_org }}"
