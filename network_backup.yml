@@ -90,7 +90,6 @@
         project: "Workshop Project"
         playbook: "restore_config.yml"
         credential: "Workshop Credential"
-        survey_enabled: true
         tower_username: admin
         tower_password: ansible
         tower_host: "https://{{ansible_fqdn}}"
