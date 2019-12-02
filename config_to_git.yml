@@ -17,13 +17,9 @@
   - name: backup the config
     ios_config:
       backup: yes
-    register: config_output
-
-  - name: rename backup
-    copy:
-      src: "{{config_output.backup_path}}"
-      dest: "/tmp/tower_workshop/configs/{{inventory_hostname}}.config"
-    delegate_to: localhost
+      backup_options:
+        filename: {{ inventory_hostname }}.cfg
+        dir_path: /tmp/tower_workshop/configs
 
   - name: remove non config lines
     lineinfile:
