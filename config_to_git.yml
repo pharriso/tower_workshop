@@ -41,6 +41,12 @@
       state: absent
     delegate_to: localhost
 
+  - name: remove timestamp
+    lineinfile:
+      path: "/tmp/tower_workshop/configs/{{inventory_hostname}}.cfg"
+      regexp: 'Last configuration change.*'
+      state: absent
+
   - name: add configs
     shell: "git add *"
     args:
