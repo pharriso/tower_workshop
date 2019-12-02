@@ -1,0 +1,24 @@
+---
+
+- name: sync templates and parsers directory to control nodes
+  hosts: all
+  gather_facts: no
+  vars:
+    student: "{{ inventory_hostname.split('.')[0] }}"
+    source_dir:
+      - ~/uk_ansible_workshop/old_linklight/uk_ansible_workshop/exercises/networking_v2/parsers
+      - ~/uk_ansible_workshop/old_linklight/uk_ansible_workshop/exercises/networking_v2/templates
+    dest_dir: /home/{{ student }}/networking-workshop
+    ansible_ssh_user: "{{ student }}"
+  tasks:
+  - name: create target directory
+    file:
+      path: "{{ dest_dir }}"
+      mode: 0755
+      state: directory
+
+  - name: Synchronization of src on the control machine to dest on the remote hosts
+    synchronize:
+      src: "{{ item }}"
+      dest: "{{ dest_dir }}"
+    loop: "{{ source_dir }}"

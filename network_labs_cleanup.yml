@@ -9,7 +9,7 @@
     tower_credential: "Workshop Credential"
     tower_inventory: "Workshop Inventory"
     tower_username: admin
-    tower_password: ansible
+    tower_password: 8goWtiFPdhEn9V
     job_template:
     - { "name": "Network-Commands", "playbook": "network_commands.yml" }
     - { "name": "Network-System", "playbook": "network_system.yml" }
