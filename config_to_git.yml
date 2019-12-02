@@ -1,0 +1,51 @@
+---
+
+- name: push config to git
+  hosts: cisco
+  connection: network_cli
+  gather_facts: no
+  tasks:
+
+  - name: make sure git is up to date
+    git:
+      repo: https://github.com/pharriso/tower_workshop.git
+      dest: /tmp/
+      clone: yes
+      update: yes
+
+  - name: backup the config
+    ios_config:
+      backup: yes
+    register: config_output
+
+  - name: rename backup
+    copy:
+      src: "{{config_output.backup_path}}"
+      dest: "/tmp/tower_workshop/configs/{{inventory_hostname}}.config"
+
+  - name: remove non config lines
+    lineinfile:
+      path: "/tmp/tower_workshop/configs/{{inventory_hostname}}.config"
+      line: "Building configuration..."
+      state: absent
+
+  - name: remove non config lines - regexp
+    lineinfile:
+      path: "/tmp/tower_workshop/configs/{{inventory_hostname}}.config"
+      regexp: 'Current configuration.*'
+      state: absent
+
+  - name: add configs
+    shell: "git add *"
+    args:
+      chdir: /tmp/tower_workshop
+
+  - name: git commit
+    shell: git commit -m "Ansible Backup" 
+    args:
+      chdir: /tmp/tower_workshop
+
+  - name: push to git
+    shell: git push 
+    args:
+      chdir: /tmp/tower_workshop
