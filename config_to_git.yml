@@ -48,7 +48,7 @@
     delegate_to: localhost
 
   - name: git config
-    shell: git config user.name "ansible backup" && git config user.email "backup@tower"
+    shell: git config --global user.name "ansible backup" && git config --global user.email "backup@tower"
     args:
       chdir: /tmp/tower_workshop
     delegate_to: localhost
