@@ -6,9 +6,14 @@
   gather_facts: no
   tasks:
 
+  - name: clear out directory first
+    file:
+      path: /tmp/tower_workshop
+      state: absent
+
   - name: make sure git is up to date
     git:
-      repo: https://github.com/pharriso/tower_workshop.git
+      repo: git@github.com:pharriso/tower_workshop.git
       dest: /tmp/tower_workshop
       clone: yes
       update: yes
