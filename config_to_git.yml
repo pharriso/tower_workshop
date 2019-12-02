@@ -18,7 +18,7 @@
     ios_config:
       backup: yes
       backup_options:
-        filename: {{ inventory_hostname }}.cfg
+        filename: "{{ inventory_hostname }}.cfg"
         dir_path: /tmp/tower_workshop/configs
 
   - name: remove non config lines
