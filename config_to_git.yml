@@ -73,4 +73,4 @@
     register: git_push
     failed_when: 
       - "'nothing to commit' not in git_push.stdout_lines"
-      - git_push.rc != 0
+      - git_push.rc != '0'
