@@ -41,14 +41,14 @@
       chdir: /tmp/tower_workshop
     delegate_to: localhost
 
-  - name: git commit
-    shell: git commit -m "Ansible Backup" 
+  - name: git config
+    shell: git config user.name "ansible backup" && git config user.email "backup@tower"
     args:
       chdir: /tmp/tower_workshop
     delegate_to: localhost
 
-  - name: git config
-    shell: git config user.name "ansible backup" && git config user.email "backup@tower"
+  - name: git commit
+    shell: git commit -m "Ansible Backup" 
     args:
       chdir: /tmp/tower_workshop
     delegate_to: localhost
