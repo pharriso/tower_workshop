@@ -72,5 +72,5 @@
     delegate_to: localhost
     register: git_push
     failed_when: 
-      - '"nothing to commit" not in git_push.stdout '
+      - "'nothing to commit' not in git_push.stdout"
       - git_push.rc != 0
