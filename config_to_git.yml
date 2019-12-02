@@ -23,14 +23,14 @@
 
   - name: remove non config lines
     lineinfile:
-      path: "/tmp/tower_workshop/configs/{{inventory_hostname}}.config"
+      path: "/tmp/tower_workshop/configs/{{inventory_hostname}}.cfg"
       line: "Building configuration..."
       state: absent
     delegate_to: localhost
 
   - name: remove non config lines - regexp
     lineinfile:
-      path: "/tmp/tower_workshop/configs/{{inventory_hostname}}.config"
+      path: "/tmp/tower_workshop/configs/{{inventory_hostname}}.cfg"
       regexp: 'Current configuration.*'
       state: absent
     delegate_to: localhost
@@ -43,6 +43,12 @@
 
   - name: git commit
     shell: git commit -m "Ansible Backup" 
+    args:
+      chdir: /tmp/tower_workshop
+    delegate_to: localhost
+
+  - name: git config
+    shell: git config user.name "ansible backup" && git config user.email "backup@tower"
     args:
       chdir: /tmp/tower_workshop
     delegate_to: localhost
