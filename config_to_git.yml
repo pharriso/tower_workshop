@@ -10,6 +10,7 @@
     file:
       path: /tmp/tower_workshop
       state: absent
+    delegate_to: localhost
 
   - name: make sure git is up to date
     git:
