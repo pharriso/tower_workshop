@@ -71,4 +71,6 @@
       chdir: /tmp/tower_workshop
     delegate_to: localhost
     register: git_push
-    failed_when: "'nothing to commit' not in git_push.stdout and git_push.rc != 0"
+    failed_when: 
+      - '"nothing to commit" not in git_push.stdout '
+      - git_push.rc != 0
