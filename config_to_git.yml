@@ -12,6 +12,7 @@
       dest: /tmp/tower_workshop
       clone: yes
       update: yes
+    delegate_to: localhost
 
   - name: backup the config
     ios_config:
@@ -22,30 +23,36 @@
     copy:
       src: "{{config_output.backup_path}}"
       dest: "/tmp/tower_workshop/configs/{{inventory_hostname}}.config"
+    delegate_to: localhost
 
   - name: remove non config lines
     lineinfile:
       path: "/tmp/tower_workshop/configs/{{inventory_hostname}}.config"
       line: "Building configuration..."
       state: absent
+    delegate_to: localhost
 
   - name: remove non config lines - regexp
     lineinfile:
       path: "/tmp/tower_workshop/configs/{{inventory_hostname}}.config"
       regexp: 'Current configuration.*'
       state: absent
+    delegate_to: localhost
 
   - name: add configs
     shell: "git add *"
     args:
       chdir: /tmp/tower_workshop
+    delegate_to: localhost
 
   - name: git commit
     shell: git commit -m "Ansible Backup" 
     args:
       chdir: /tmp/tower_workshop
+    delegate_to: localhost
 
   - name: push to git
     shell: git push 
     args:
       chdir: /tmp/tower_workshop
+    delegate_to: localhost
