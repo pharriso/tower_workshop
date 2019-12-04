@@ -52,12 +52,14 @@
     args:
       chdir: /tmp/tower_workshop
     delegate_to: localhost
+    run_once: true
 
   - name: git config
     shell: git config --global user.name "ansible backup" && git config --global user.email "backup@tower"
     args:
       chdir: /tmp/tower_workshop
     delegate_to: localhost
+    run_once: true
 
   - name: git commit 
     shell: git commit -m "Ansible backup"
@@ -66,9 +68,11 @@
     delegate_to: localhost
     register: git_push
     failed_when: "'working directory clean' not in git_push.stdout and git_push.rc != 0"
+    run_once: true
 
   - name: push to git
     shell: git push 
     args:
       chdir: /tmp/tower_workshop
     delegate_to: localhost
+    run_once: true
