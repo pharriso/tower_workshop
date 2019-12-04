@@ -22,6 +22,13 @@
     delegate_to: localhost
     run_once: true
 
+  - name: make sure we have a configs directory
+    file:
+      path: /tmp/tower_workshop/configs
+      state: directory
+    delegate_to: localhost
+    run_once: true
+
   - name: backup the config
     ios_config:
       backup: yes
