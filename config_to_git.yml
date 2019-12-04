@@ -11,6 +11,7 @@
       path: /tmp/tower_workshop
       state: absent
     delegate_to: localhost
+    run_once: true
 
   - name: make sure git is up to date
     git:
@@ -19,6 +20,7 @@
       clone: yes
       update: yes
     delegate_to: localhost
+    run_once: true
 
   - name: backup the config
     ios_config:
