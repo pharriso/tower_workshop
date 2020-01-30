@@ -5,6 +5,7 @@
   become: yes
   gather_facts: no
   vars:
+    tower_password:
     tower_jobs:
       - {"name": "ARCHIVE BACKUP", "playbook": "archive_backup.yml" }
       - {"name": "ARCHIVE RESTORE", "playbook": "archive_restore.yml" }
@@ -21,7 +22,7 @@
         playbook: "{{ item.playbook }}"
         credential: "Workshop Credential"
         tower_username: admin
-        tower_password: 8goWtiFPdhEn9V
+        tower_password: "{{ tower_password }}"
         tower_host: https://localhost
         validate_certs: false
       loop: "{{ tower_jobs }}"
@@ -29,7 +30,7 @@
     - name: CREATE TOWER WORKFLOW
       tower_workflow_template:
         tower_username: admin
-        tower_password: 8goWtiFPdhEn9V
+        tower_password: "{{ tower_password }}"
         tower_host: https://localhost
         validate_certs: false
         name: NETWORK INTERFACE WORKFLOW
