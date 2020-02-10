@@ -20,6 +20,7 @@
       clone: yes
       update: yes
       accept_hostkey: yes
+      key_file: /home/awx/.ssh/id_rsa
     delegate_to: localhost
     run_once: true
 
