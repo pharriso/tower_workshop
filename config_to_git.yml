@@ -19,6 +19,7 @@
       dest: /tmp/tower_workshop
       clone: yes
       update: yes
+      accept_hostkey: yes
     delegate_to: localhost
     run_once: true
 
